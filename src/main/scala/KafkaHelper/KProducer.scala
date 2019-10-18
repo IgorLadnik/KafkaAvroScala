@@ -1,15 +1,15 @@
 package KafkaHelper
 
 import java.util.Properties
+
 import io.confluent.kafka.serializers.{KafkaAvroDeserializer, KafkaAvroSerializer}
 import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.clients.producer._
 import org.apache.kafka.common.serialization.{ByteArraySerializer, StringSerializer}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
-import scala.concurrent.Await
-import scala.concurrent.duration.Duration
 
 class KProducer(val config: Properties,
                 val logger: (String) => Unit) {
@@ -35,7 +35,7 @@ class KProducer(val config: Properties,
   def !(key: String, genericRecord: GenericRecord) = send(key, genericRecord)
 
   def send(key: String, genericRecord: GenericRecord) = {
-    Await.ready(sendInner(key, genericRecord), Duration.Inf).onComplete {
+    sendInner(key, genericRecord).onComplete {
       case Success(u: Unit) => { }
       case Failure(e: Exception) => { logger(e.getMessage); close }
     }

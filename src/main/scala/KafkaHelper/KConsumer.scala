@@ -40,8 +40,8 @@ class KConsumer(val config: Properties,
 
   def startConsuming: KConsumer = {
     startConsumingInner.onComplete {
-      case Success(u: Unit) => { consumer.close; logger("Kafka Consumer closed") }
-      case Failure(e: Exception) => { logger(e.getMessage); consumer.close }
+      case Success(u: Unit) => { logger("Kafka Consumer closed") }
+      case Failure(e: Exception) => { consumer.close; logger(e.getMessage);  }
     }
     this
   }
@@ -55,6 +55,8 @@ class KConsumer(val config: Properties,
         catch { case e: Exception => logger(e.getMessage) }
       }
     }
+
+    consumer.close;
   }
 
   def deserialize(bts: Array[Byte], topic: String): GenericRecord =
