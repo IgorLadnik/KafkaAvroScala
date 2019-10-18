@@ -6,9 +6,9 @@ import io.confluent.kafka.serializers.{KafkaAvroDeserializer, KafkaAvroSerialize
 import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.clients.producer._
 import org.apache.kafka.common.serialization.{ByteArraySerializer, StringSerializer}
-
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
 class KProducer(val config: Properties,
@@ -35,7 +35,7 @@ class KProducer(val config: Properties,
   def !(key: String, genericRecord: GenericRecord) = send(key, genericRecord)
 
   def send(key: String, genericRecord: GenericRecord) = {
-    sendInner(key, genericRecord).onComplete {
+    Await.ready(sendInner(key, genericRecord), Duration.Inf).onComplete {
       case Success(u: Unit) => { }
       case Failure(e: Exception) => { logger(e.getMessage); close }
     }
