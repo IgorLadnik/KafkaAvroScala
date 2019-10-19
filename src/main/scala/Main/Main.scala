@@ -1,11 +1,9 @@
 package Main
 
 import java.util.{Properties, Random, Timer, TimerTask}
-
 import KafkaHelper._
 import akka.http.scaladsl.model.DateTime
 import org.apache.avro.generic.GenericData
-
 import scala.language.postfixOps
 
 object Main {

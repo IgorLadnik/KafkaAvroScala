@@ -28,8 +28,6 @@ class KConsumer(val config: Properties,
   config.put(KafkaPropNames.KeyDeserializer, classOf[StringDeserializer].getCanonicalName)
   config.put(KafkaPropNames.ValueDeserializer, classOf[ByteArrayDeserializer].getCanonicalName)
 
-  //config.put("auto.offset.reset", "latest")
-
   // Use Specific Record or else you get Avro GenericRecord.
   config.put("specific.avro.reader", "false")
 
@@ -39,7 +37,7 @@ class KConsumer(val config: Properties,
 
   def startConsuming: KConsumer = {
     startConsumingInner.onComplete {
-      case Success(u: Unit) => { logger("Kafka Consumer closed"); isEnded = true }
+      case Success(u: Unit) => isEnded = true
       case Failure(e: Exception) => { consumer.close; logger(e.getMessage)  }
     }
     this
@@ -62,10 +60,9 @@ class KConsumer(val config: Properties,
   def deserialize(bts: Array[Byte], topic: String): GenericRecord =
     kafkaAvroDeserializer.deserialize(topic, bts, recordConfig.schema).asInstanceOf[GenericRecord]
 
-  //def close = continue = false
-
   def close = {
     continue = false
-    while (!isEnded) {}
+    while (!isEnded) { }
+    logger("Kafka Consumer closed");
   }
 }
