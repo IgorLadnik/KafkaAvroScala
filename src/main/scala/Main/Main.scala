@@ -55,7 +55,7 @@ object Main {
           for (i <- 0 until 10) {
             count += 1
 
-            val gr = new GenericData.Record(producer.recordConfig.schema)
+            val gr = new GenericData.Record(producer.getSchema)
 
             gr.put("Id", -count)
             gr.put("Name", s"${config.get(KafkaPropNames.GroupId)}-${count}")

@@ -10,20 +10,21 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class KConsumer(val config: Properties,
-                val p: (String, GenericRecord, Long) => Unit,
-                val logger: (String) => Unit) {
+class KConsumer(private val config: Properties,
+                private val p: (String, GenericRecord, Long) => Unit,
+                private val logger: (String) => Unit) {
 
-  @volatile private[KConsumer] var continue = true
-  @volatile private[KConsumer] var isEnded = false
+  @volatile private var continue = true
+  @volatile private var isEnded = false
 
   // Ctor
 
-  val topic = config.get(KafkaPropNames.Topic).asInstanceOf[String]
+  private val topic = config.get(KafkaPropNames.Topic).asInstanceOf[String]
+  private val schemaRegistryUrl = config.get(KafkaPropNames.SchemaRegistryUrl).asInstanceOf[String]
 
-  val recordConfig = new RecordConfig(config.get(KafkaPropNames.SchemaRegistryUrl).asInstanceOf[String])
-  val schemaRegistryClient = new SchemaRegistryClientEx(recordConfig.schema, recordConfig.id, recordConfig.version)
-  val kafkaAvroDeserializer = new KafkaAvroDeserializer(schemaRegistryClient)
+  private val recordConfig = new RecordConfig(config.get(KafkaPropNames.SchemaRegistryUrl).asInstanceOf[String])
+  private val schemaRegistryClient = recordConfig.getSchemaRegistryClient(schemaRegistryUrl)
+  private val kafkaAvroDeserializer = new KafkaAvroDeserializer(schemaRegistryClient)
 
   config.put(KafkaPropNames.KeyDeserializer, classOf[StringDeserializer].getCanonicalName)
   config.put(KafkaPropNames.ValueDeserializer, classOf[ByteArrayDeserializer].getCanonicalName)
@@ -31,7 +32,7 @@ class KConsumer(val config: Properties,
   // Use Specific Record or else you get Avro GenericRecord.
   config.put("specific.avro.reader", "false")
 
-  private[KConsumer] val consumer = new KafkaConsumer[String, Array[Byte]](config)
+  private val consumer = new KafkaConsumer[String, Array[Byte]](config)
 
   // Methods
 
@@ -43,7 +44,7 @@ class KConsumer(val config: Properties,
     this
   }
 
-  private[KConsumer] def startConsumingInner: Future[Unit] = Future {
+  private def startConsumingInner: Future[Unit] = Future {
     consumer.subscribe(Arrays.asList(topic))
     while (continue) {
       val record = consumer.poll(100).asScala

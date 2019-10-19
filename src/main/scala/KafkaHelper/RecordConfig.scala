@@ -4,6 +4,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import org.apache.avro.Schema
+import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 import scala.io.Source
@@ -31,13 +32,18 @@ class RecordConfig(val schemaRegistryUrl: String) {
 
   // Methods
 
-  private[RecordConfig] def getSchemaString(strOrg: String): String = {
+  def getSchemaRegistryClient(schemaRegistryUrl: String): SchemaRegistryClient = {
+    //2 new CachedSchemaRegistryClient(schemaRegistryUrl, 128)
+    new SchemaRegistryClientEx(schema, id, version) //2
+  }
+
+  private def getSchemaString(strOrg: String): String = {
     val startIndex = strOrg.indexOf("{\"type\":")
     val endIndex = strOrg.lastIndexOf("}")
     strOrg.substring(startIndex, endIndex)
   }
 
-  private[RecordConfig] def getConfigString: String = {
+  private def getConfigString: String = {
     implicit val system = ActorSystem()
     //implicit val materializer = ActorMaterializer()
     // needed for the future flatMap/onComplete in the end
@@ -47,13 +53,6 @@ class RecordConfig(val schemaRegistryUrl: String) {
 
     try {
       val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = schemaRegistryUrl))
-
-      //  responseFuture
-      //    .onComplete {
-      //      case Success(res) => println(res)
-      //      case Failure(_)   => sys.error("something wrong")
-      //    }
-
       val response = Await.result(responseFuture, 1 second)
       if (response.status.intValue == 200)
         strConfig = response.entity.toString

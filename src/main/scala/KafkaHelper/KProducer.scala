@@ -1,6 +1,7 @@
 package KafkaHelper
 
 import java.util.Properties
+
 import io.confluent.kafka.serializers.{KafkaAvroDeserializer, KafkaAvroSerializer}
 import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.clients.producer._
@@ -10,23 +11,21 @@ import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 import scala.util.{Failure, Success}
 
-class KProducer(val config: Properties,
-                val logger: (String) => Unit) {
+class KProducer(private val config: Properties,
+                private val logger: (String) => Unit) {
   // Ctor
 
-  val topic = config.get(KafkaPropNames.Topic).asInstanceOf[String];
+  private val topic = config.get(KafkaPropNames.Topic).asInstanceOf[String]
+  private val schemaRegistryUrl = config.get(KafkaPropNames.SchemaRegistryUrl).asInstanceOf[String]
+  private val recordConfig = new RecordConfig(config.get(KafkaPropNames.SchemaRegistryUrl).asInstanceOf[String])
 
-  //Read avro schema file
-  //val schema: Schema = new Parser().parse(Source.fromURL(getClass.getResource("/schema.avsc")).mkString)
-
-  val recordConfig = new RecordConfig(config.get(KafkaPropNames.SchemaRegistryUrl).asInstanceOf[String])
-  val schemaRegistryClient = new SchemaRegistryClientEx(recordConfig.schema, recordConfig.id, recordConfig.version)
-  val kafkaAvroSerializer = new KafkaAvroSerializer(schemaRegistryClient)
+  private val schemaRegistryClient = recordConfig.getSchemaRegistryClient(schemaRegistryUrl)
+  private val kafkaAvroSerializer = new KafkaAvroSerializer(schemaRegistryClient)
 
   config.put(KafkaPropNames.KeySerializer, classOf[StringSerializer].getCanonicalName)
   config.put(KafkaPropNames.ValueSerializer, classOf[ByteArraySerializer].getCanonicalName)
 
-  private[KProducer] val producer = new KafkaProducer[String, Array[Byte]](config)
+  private val producer = new KafkaProducer[String, Array[Byte]](config)
 
   // Methods
 
@@ -40,7 +39,9 @@ class KProducer(val config: Properties,
     }
   }
 
-  private[KProducer] def sendInner(key: String, genericRecord: GenericRecord): Future[Unit] = Future {
+  def getSchema = recordConfig.schema
+
+  private def sendInner(key: String, genericRecord: GenericRecord): Future[Unit] = Future {
       producer.send(new ProducerRecord[String, Array[Byte]](topic,
                     config.get(KafkaPropNames.Partition).asInstanceOf[Int],
                     key, serialize(genericRecord, topic)))
