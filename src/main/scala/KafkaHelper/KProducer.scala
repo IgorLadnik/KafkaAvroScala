@@ -1,14 +1,13 @@
 package KafkaHelper
 
 import java.util.Properties
-
 import io.confluent.kafka.serializers.{KafkaAvroDeserializer, KafkaAvroSerializer}
 import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.clients.producer._
 import org.apache.kafka.common.serialization.{ByteArraySerializer, StringSerializer}
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
 class KProducer(val config: Properties,
@@ -35,8 +34,8 @@ class KProducer(val config: Properties,
   def !(key: String, genericRecord: GenericRecord) = send(key, genericRecord)
 
   def send(key: String, genericRecord: GenericRecord) = {
-    Await.ready(sendInner(key, genericRecord), Duration.Inf).onComplete {
-      case Success(u: Unit) => { }
+    Await.ready(sendInner(key, genericRecord), 3 seconds).onComplete {
+      case Success(u: Unit) =>
       case Failure(e: Exception) => { logger(e.getMessage); close }
     }
   }
@@ -50,7 +49,8 @@ class KProducer(val config: Properties,
   def serialize(genericRecord: GenericRecord, topic: String): Array[Byte] =
     kafkaAvroSerializer.serialize(topic, genericRecord)
 
-  def close = {
+  def close {
+    producer.flush
     producer.close
     println("Kafka Producer closed")
   }

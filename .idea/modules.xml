@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/KafkaAvroScala.iml" filepath="$PROJECT_DIR$/.idea/modules/KafkaAvroScala.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/KafkaAvroScala-build.iml" filepath="$PROJECT_DIR$/.idea/modules/KafkaAvroScala-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ScalaPlayground.iml" filepath="$PROJECT_DIR$/.idea/modules/ScalaPlayground.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ScalaPlayground-build.iml" filepath="$PROJECT_DIR$/.idea/modules/ScalaPlayground-build.iml" />
     </modules>
   </component>
 </project>

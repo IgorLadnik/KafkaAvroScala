@@ -7,7 +7,7 @@ import org.apache.avro.Schema
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 import scala.io.Source
-import scala.util.parsing.json.JSON//.JSON
+import scala.util.parsing.json.JSON
 
 class RecordConfig(val schemaRegistryUrl: String) {
 
@@ -69,6 +69,8 @@ class RecordConfig(val schemaRegistryUrl: String) {
     }
     else
       strConfig = Source.fromFile(schemaRegistryUrl).mkString
+
+    Await.result(system.terminate, 3 seconds)
 
     strConfig.replace("\r", "").replace("\n", "").replace("\t", "").replace(" ", "")
   }

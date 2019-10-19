@@ -1,12 +1,10 @@
 package KafkaHelper
 
 import java.util._
-
 import io.confluent.kafka.serializers.KafkaAvroDeserializer
 import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.common.serialization.{ByteArrayDeserializer, StringDeserializer}
-
 import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -16,7 +14,8 @@ class KConsumer(val config: Properties,
                 val p: (String, GenericRecord, Long) => Unit,
                 val logger: (String) => Unit) {
 
-  @volatile var continue = true
+  @volatile private[KConsumer] var continue = true
+  @volatile private[KConsumer] var isEnded = false
 
   // Ctor
 
@@ -40,8 +39,8 @@ class KConsumer(val config: Properties,
 
   def startConsuming: KConsumer = {
     startConsumingInner.onComplete {
-      case Success(u: Unit) => { logger("Kafka Consumer closed") }
-      case Failure(e: Exception) => { consumer.close; logger(e.getMessage);  }
+      case Success(u: Unit) => { logger("Kafka Consumer closed"); isEnded = true }
+      case Failure(e: Exception) => { consumer.close; logger(e.getMessage)  }
     }
     this
   }
@@ -56,11 +55,17 @@ class KConsumer(val config: Properties,
       }
     }
 
+    consumer.unsubscribe
     consumer.close;
   }
 
   def deserialize(bts: Array[Byte], topic: String): GenericRecord =
     kafkaAvroDeserializer.deserialize(topic, bts, recordConfig.schema).asInstanceOf[GenericRecord]
 
-  def close = continue = false
+  //def close = continue = false
+
+  def close = {
+    continue = false
+    while (!isEnded) {}
+  }
 }

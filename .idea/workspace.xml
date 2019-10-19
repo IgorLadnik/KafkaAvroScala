@@ -2,7 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16efc125-ba4e-4209-b2e4-686318978b98" name="Default Changelist" comment="Futures added">
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/ScalaPlayground-build.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/ScalaPlayground.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/sbt__ch_qos_logback_logback_classic_1_1_7_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/sbt__ch_qos_logback_logback_core_1_1_7_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/sbt__org_scala_lang_modules_scala_xml_2_12_1_0_6_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/sbt__org_scalactic_scalactic_2_12_3_0_5_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/sbt__org_scalatest_scalatest_2_12_3_0_5_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/KafkaAvroScala-build.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/KafkaAvroScala.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/Dependencies.scala" beforeDir="false" afterPath="$PROJECT_DIR$/project/Dependencies.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/KafkaHelper/KConsumer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/KafkaHelper/KConsumer.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/KafkaHelper/KProducer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/KafkaHelper/KProducer.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/KafkaHelper/RecordConfig.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/KafkaHelper/RecordConfig.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/Main/Main.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Main/Main.scala" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +104,7 @@
       <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
       <log_file alias="log" path="C:/temp" />
       <option name="MAIN_CLASS_NAME" value="Main.Main" />
-      <module name="KafkaAvroScala" />
+      <module name="ScalaPlayground" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Main.*" />
@@ -112,7 +129,7 @@
           <value>
             <list>
               <ExternalProjectPojo>
-                <option name="name" value="root [file:/C:/prj/_Scala/ScalaPlayground/]" />
+                <option name="name" value="root [file:/C:/prj/_Scala/KafkaAvroScala/]" />
                 <option name="path" value="$PROJECT_DIR$" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
@@ -126,9 +143,9 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="6285644288228" />
-        <entry key="$PROJECT_DIR$/build.sbt" value="506290721" />
-        <entry key="$PROJECT_DIR$/project/Dependencies.scala" value="258487920" />
+        <entry key="$PROJECT_DIR$" value="6285668791985" />
+        <entry key="$PROJECT_DIR$/build.sbt" value="599173411" />
+        <entry key="$PROJECT_DIR$/project/Dependencies.scala" value="4266627339" />
         <entry key="$PROJECT_DIR$/project/build.properties" value="1396028727" />
         <entry key="$PROJECT_DIR$/project/plugins.sbt" value="1204402397" />
       </map>
@@ -219,6 +236,8 @@
       <workItem from="1571407293610" duration="203000" />
       <workItem from="1571407518572" duration="3239000" />
       <workItem from="1571411104939" duration="258000" />
+      <workItem from="1571411561976" duration="7150000" />
+      <workItem from="1571457711175" duration="5663000" />
     </task>
     <task id="LOCAL-00001" summary="Variance">
       <created>1569830084922</created>

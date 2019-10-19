@@ -6,10 +6,10 @@ import KafkaHelper._
 import akka.http.scaladsl.model.DateTime
 import org.apache.avro.generic.GenericData
 
+import scala.language.postfixOps
+
 object Main {
   def main(args: Array[String]) {
-    import scala.language.postfixOps
-
 
     val isFromLocalFile = true //1
 
@@ -76,8 +76,7 @@ object Main {
     println("\nPress <Enter> to continue...")
     System.in.read
 
-    timerTask.cancel
-    timer.purge
+    timer.cancel
     producer.close
     consumer.close
   }

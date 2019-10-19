@@ -9,11 +9,11 @@ lazy val root = (project in file("."))
   .settings(
     name := "ScalaPlayground",
     libraryDependencies ++= Seq(
-      scalaTest % Test,
+      //scalaTest % Test,
       kafka,
       avro,
       avroSerializer,
-      logBack,
+      //logBack,
       parser,
       akkaActor,
       akkaHttp,
@@ -21,9 +21,9 @@ lazy val root = (project in file("."))
     )
 )
 
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+//resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
-logLevel := Level.Error
+//logLevel := Level.Error
 
 //resolvers += "io.confluent" at "http://packages.confluent.io/maven/"
 
