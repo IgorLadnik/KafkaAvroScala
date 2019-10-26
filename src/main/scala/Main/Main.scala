@@ -9,7 +9,7 @@ import scala.language.postfixOps
 object Main {
   def main(args: Array[String]) {
 
-    val isFromLocalFile = true //1
+    val isFromLocalFile = false //1
 
     val schemaFileName = "schema.json"
     var urlSchemaPrefix = "http://localhost:9999/"

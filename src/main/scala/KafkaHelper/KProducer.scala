@@ -1,7 +1,6 @@
 package KafkaHelper
 
 import java.util.Properties
-
 import io.confluent.kafka.serializers.{KafkaAvroDeserializer, KafkaAvroSerializer}
 import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.clients.producer._
