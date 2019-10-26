@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="16efc125-ba4e-4209-b2e4-686318978b98" name="Default Changelist" comment="Futures added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/KafkaHelper/KProducer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/KafkaHelper/KProducer.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/KafkaHelper/SchemaRegistryClientEx.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/KafkaHelper/SchemaRegistryClientEx.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/Main/Main.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Main/Main.scala" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -129,7 +127,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="6285668791985" />
+        <entry key="$PROJECT_DIR$" value="6288361207812" />
         <entry key="$PROJECT_DIR$/build.sbt" value="599173411" />
         <entry key="$PROJECT_DIR$/project/Dependencies.scala" value="4266627339" />
         <entry key="$PROJECT_DIR$/project/build.properties" value="1396028727" />
@@ -231,6 +229,7 @@
       <workItem from="1571558535983" duration="599000" />
       <workItem from="1571819662825" duration="27000" />
       <workItem from="1572067350191" duration="4822000" />
+      <workItem from="1572090321586" duration="136000" />
     </task>
     <task id="LOCAL-00001" summary="Variance">
       <created>1569830084922</created>
